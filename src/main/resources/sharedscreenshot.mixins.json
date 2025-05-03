@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "ng.lyu.sharedscreenshot.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "sharedscreenshot.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
