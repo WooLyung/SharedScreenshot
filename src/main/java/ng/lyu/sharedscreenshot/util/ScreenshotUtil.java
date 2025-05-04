@@ -1,7 +1,8 @@
 package ng.lyu.sharedscreenshot.util;
 
-import com.mojang.blaze3d.pipeline.RenderTarget;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.ClickEvent;
+import net.minecraft.network.chat.Component;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.system.MemoryUtil;
 
@@ -12,9 +13,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.UUID;
 
 public class ScreenshotUtil {
-    public static byte[] captureMinecraftScreenToPng() {
+    public static byte[] captureMinecraftScreenToJPG() {
         Minecraft mc = Minecraft.getInstance();
 
         int width = mc.getWindow().getWidth();
@@ -28,20 +30,21 @@ public class ScreenshotUtil {
             GL11.glReadPixels(0, 0, width, height, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer);
             buffer.rewind();
 
-            BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+            BufferedImage rgbImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
                     int i = ((height - y - 1) * width + x) * 4;
                     int r = buffer.get(i) & 0xFF;
                     int g = buffer.get(i + 1) & 0xFF;
                     int b = buffer.get(i + 2) & 0xFF;
-                    int a = buffer.get(i + 3) & 0xFF;
-                    image.setRGB(x, y, (a << 24) | (r << 16) | (g << 8) | b);
+                    // 알파는 무시
+                    int rgb = (r << 16) | (g << 8) | b;
+                    rgbImage.setRGB(x, y, rgb);
                 }
             }
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write(image, "PNG", baos);
+            ImageIO.write(rgbImage, "JPG", baos);
             return baos.toByteArray();
 
         } catch (IOException e) {
@@ -60,11 +63,28 @@ public class ScreenshotUtil {
 
         try (FileOutputStream fos = new FileOutputStream(outputFile)) {
             fos.write(pngData);
-            System.out.println("PNG 저장 완료: " + outputFile.getAbsolutePath());
             return true;
         } catch (IOException e) {
-            System.err.println("PNG 저장 실패: " + e.getMessage());
             return false;
         }
+    }
+
+    public static void trySendOpenScreenshot(UUID uuid) {
+        byte[] imageData = ImageCache.getImage(uuid);
+        if (imageData == null)
+            return;
+
+        Component message = Component.translatable("ng.lyu.sharedscreenshot.send", ImageCache.getSender(uuid))
+                .append(Component.literal(": "))
+                .append(Component.translatable("ng.lyu.sharedscreenshot.screenshot").withStyle(style -> style.withHoverEvent(
+                                new net.minecraft.network.chat.HoverEvent(
+                                        net.minecraft.network.chat.HoverEvent.Action.SHOW_TEXT,
+                                        Component.translatable("ng.lyu.sharedscreenshot.click")
+                                )
+                        ).withClickEvent(
+                                new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/openshot " + uuid.toString())
+                        ).withColor(0x2CD50B)
+                ));
+        Minecraft.getInstance().player.sendSystemMessage(message);
     }
 }

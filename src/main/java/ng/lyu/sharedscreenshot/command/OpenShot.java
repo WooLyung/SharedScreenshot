@@ -1,9 +1,7 @@
 package ng.lyu.sharedscreenshot.command;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.UuidArgument;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -11,8 +9,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.PacketDistributor;
 import ng.lyu.sharedscreenshot.network.NetworkHandler;
 import ng.lyu.sharedscreenshot.network.SharedScreenshotOpenPacket;
-import ng.lyu.sharedscreenshot.screen.ScreenshotViewerScreen;
-import ng.lyu.sharedscreenshot.util.ImageCache;
 
 import java.util.UUID;
 

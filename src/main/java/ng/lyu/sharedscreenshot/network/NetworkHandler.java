@@ -17,10 +17,15 @@ public class NetworkHandler {
 
     public static void register() {
         int id = 0;
-        CHANNEL.registerMessage(id++, SharedScreenshotPacket.class,
-                SharedScreenshotPacket::encode,
-                SharedScreenshotPacket::decode,
-                SharedScreenshotPacket::handle
+        CHANNEL.registerMessage(id++, SharedScreenshotBodyPacket.class,
+                SharedScreenshotBodyPacket::encode,
+                SharedScreenshotBodyPacket::decode,
+                SharedScreenshotBodyPacket::handle
+        );
+        CHANNEL.registerMessage(id++, SharedScreenshotHeadPacket.class,
+                SharedScreenshotHeadPacket::encode,
+                SharedScreenshotHeadPacket::decode,
+                SharedScreenshotHeadPacket::handle
         );
         CHANNEL.registerMessage(id++, SharedScreenshotOpenPacket.class,
                 SharedScreenshotOpenPacket::encode,

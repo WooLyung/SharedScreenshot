@@ -17,7 +17,7 @@ public class ClientKeyHandler {
     public static final KeyMapping SCREENSHOT_KEY = new KeyMapping(
             "ng.lyu.sharedscreenshot.screenshotkey",
             KeyConflictContext.UNIVERSAL,
-            InputConstants.getKey(GLFW.GLFW_KEY_GRAVE_ACCENT, 0),
+            InputConstants.getKey(GLFW.GLFW_KEY_F6, 0),
             "key.categories.misc"
     );
 
