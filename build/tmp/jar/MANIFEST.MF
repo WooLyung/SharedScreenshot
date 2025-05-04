@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Specification-Title: sharedscreenshot
-Specification-Vendor: 
+Specification-Vendor: woolyung
 Specification-Version: 1
 Implementation-Title: SharedScreenshot
 Implementation-Version: 1.0.0
-Implementation-Vendor: 
-Implementation-Timestamp: 2025-05-04T09:17:00+0900
+Implementation-Vendor: woolyung
+Implementation-Timestamp: 2025-05-04T09:46:30+0900
 MixinConfigs: sharedscreenshot.mixins.json
 
