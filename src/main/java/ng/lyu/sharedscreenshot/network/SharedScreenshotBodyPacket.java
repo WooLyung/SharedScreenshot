@@ -4,6 +4,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.PacketDistributor;
+import ng.lyu.sharedscreenshot.discord.DiscordBot;
 import ng.lyu.sharedscreenshot.util.ImageCache;
 import ng.lyu.sharedscreenshot.util.ScreenshotUtil;
 
@@ -46,6 +47,8 @@ public class SharedScreenshotBodyPacket {
             else {
                 for (ServerPlayer target : ctx.get().getSender().server.getPlayerList().getPlayers())
                     NetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> target), msg);
+                ImageCache.insertOrUpdate(msg.uuid, msg.segment, msg.segmentData);
+                DiscordBot.trySendImage(msg.uuid);
             }
 
         });

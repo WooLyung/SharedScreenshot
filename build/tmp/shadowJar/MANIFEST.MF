@@ -5,6 +5,6 @@ Specification-Version: 1
 Implementation-Title: SharedScreenshot
 Implementation-Version: 1.0.0
 Implementation-Vendor: woolyung
-Implementation-Timestamp: 2025-05-10T14:33:11+0900
+Implementation-Timestamp: 2025-05-10T13:18:41+0900
 MixinConfigs: sharedscreenshot.mixins.json
 

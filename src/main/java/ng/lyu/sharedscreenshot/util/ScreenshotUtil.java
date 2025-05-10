@@ -56,19 +56,6 @@ public class ScreenshotUtil {
         }
     }
 
-    public static boolean savePngToFile(byte[] pngData, File outputFile) {
-        if (pngData == null || pngData.length == 0) {
-            return false;
-        }
-
-        try (FileOutputStream fos = new FileOutputStream(outputFile)) {
-            fos.write(pngData);
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
-    }
-
     public static void trySendOpenScreenshot(UUID uuid) {
         byte[] imageData = ImageCache.getImage(uuid);
         if (imageData == null)
